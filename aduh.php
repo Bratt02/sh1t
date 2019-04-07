@@ -170,14 +170,17 @@ while(1) {
     
     $register_bt = reg($email, $ref);
     
-    print_r($register_bt);
+    // print_r($register_bt);
     
+    $msg = getStr($register_bt, "\"message\": \"", "\"");
+
     if (stripos($register_bt, 'Too Many Attempts.')) {
-        echo '['.date("Y-m-d H:i:s", time()),'] Gagal Daftar [Too Many Attempts.]';			    
+        
+        echo '['.date("Y-m-d H:i:s", time()),'] Gagal Daftar ['.$msg.']';			    
         echo "\r\n";
         
         $ss = getStr($register_bt, 'Retry-After: ', 'X-RateLimit-Reset:');
-        $shn = $ss+1;
+        $shn = $ss+2;
         
         sleep($shn);
         
@@ -257,7 +260,7 @@ while(1) {
         echo "\r\n"; 
         exit;
     } else {
-        echo '['.date("Y-m-d H:i:s", time()),'] Gagal Daftar';
+        echo '['.date("Y-m-d H:i:s", time()),'] Gagal Daftar {msg : '.$msg.'}';
         echo "\r\n";
         continue;
     }
