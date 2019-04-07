@@ -135,22 +135,19 @@ function dumpUrl($mail)
     fwrite($handle, $data);
 }
 
-echo 'Kang Recode - 2k19'; echo "\r\n";
-echo "================"; echo "\r\n";
+echo 'Kang Recode - 2k19'; echo "\r\n\n";
+
 //echo 'Kode Referral ? : ';
 
 $ref = "EL6O533I3";
 //echo 'Mau Berapa ? : ';
+    
+echo "================"; echo "\r\n";
+echo "Bigtoken v6.0.1"; echo "\r\n";
+echo "================"; echo "\r\n";
 
-$jumlah = 987654321;
-
-$i=1;
-
-while($i <= $jumlah) {
-    echo "================"; echo "\r\n";
-    echo "Bigtoken v.6"; echo "\r\n";
-    echo "================"; echo "\r\n";
-
+while(1) {
+  
     $ea = xxx();
 
     $a = [
@@ -168,13 +165,13 @@ while($i <= $jumlah) {
     $b = $a[mt_rand(0, count($a) - 1)];
     $email = ''.$ea.'@'.$b.'';
     
-    echo '['.$i.'/'.$jumlah.'] Email : '.$email; 		    
+    echo '['.date("Y-m-d H:i:s", time()),'] Email : '.$email; 		    
     echo "\r\n";
     
     $register_bt = reg($email, $ref);
     
     if (stripos($register_bt, 'Too Many Attempts.')) {
-        echo '['.$i.'/'.$jumlah.'] Gagal Daftar [Too Many Attempts.]';			    
+        echo '['.date("Y-m-d H:i:s", time()),'] Gagal Daftar [Too Many Attempts.]';			    
         echo "\r\n";
         
         $ss = getStr($register_bt, 'Retry-After: ', 'X-RateLimit-Reset:');
@@ -184,7 +181,7 @@ while($i <= $jumlah) {
         
         continue;
     } elseif (stripos($register_bt, 'The email has already been taken.')) {
-        echo '['.$i.'/'.$jumlah.'] E-Mail Sudah Terdaftar';			    
+        echo '['.date("Y-m-d H:i:s", time()),'] E-Mail Sudah Terdaftar';			    
         echo "\r\n"; 
         continue;
     } elseif (stripos($register_bt, '204 No Content')) {
@@ -196,8 +193,8 @@ while($i <= $jumlah) {
         $links = getStr($linkg, 'Location: https://generator.email/inbox', '/');
         
         if(!$links) {
-            echo '['.$i.'/'.$jumlah.'] Gagal Dapat Link'; echo "\r\n";
-            echo "[".$i."/".$jumlah."] Tunggu beberapa menit : https://generator.email/".$email; echo "\r\n";
+            echo '['.date("Y-m-d H:i:s", time()),'] Gagal Dapat Link'; echo "\r\n";
+            echo "[".date("Y-m-d H:i:s", time()),"] Tunggu beberapa menit : https://generator.email/".$email; echo "\r\n";
             
             dumpUrl($email);
             
@@ -208,14 +205,14 @@ while($i <= $jumlah) {
         $link = getStr($getem,'none" href="','"');
         
         if (!$link) {
-            echo '['.$i.'/'.$jumlah.'] E-Mail Tidak Ada Isi'; echo "\r\n";
-            echo "[".$i."/".$jumlah."] Check Sendiri : https://generator.email/".$email; echo "\r\n";
+            echo '['.date("Y-m-d H:i:s", time()),'] E-Mail Tidak Ada Isi'; echo "\r\n";
+            echo "[".date("Y-m-d H:i:s", time()),"] Check Sendiri : https://generator.email/".$email; echo "\r\n";
             
             dumpUrl($email);
 
             continue;
         } else {
-            echo '['.$i.'/'.$jumlah.'] Berhasil Dapat Link';
+            echo '['.date("Y-m-d H:i:s", time()),'] Berhasil Dapat Link';
             echo "\r\n";
             
             $getver = get($link);
@@ -225,16 +222,16 @@ while($i <= $jumlah) {
             $ver = ver($d,$cod);
 
             if ($ver == '200') {
-                echo '['.$i.'/'.$jumlah.'] Sukses Verif '.$em.'';
+                echo '['.date("Y-m-d H:i:s", time()),'] Sukses Verif '.$em.'';
                 echo "\r\n";
             } elseif ($ver == '208') {
-                echo '['.$i.'/'.$jumlah.'] Sudah Verif '.$em.'';
+                echo '['.date("Y-m-d H:i:s", time()),'] Sudah Verif '.$em.'';
                 echo "\r\n";
             } elseif ($ver == '422') {
-                echo '['.$i.'/'.$jumlah.'] Salah Format '.$em.'';
+                echo '['.date("Y-m-d H:i:s", time()),'] Salah Format '.$em.'';
                 echo "\r\n";
             } elseif($ver == '429') {
-                echo '['.$i.'/'.$jumlah.'] Gagal Verif [Too Many Attempts.] Cek Manual di cdy.txt';
+                echo '['.date("Y-m-d H:i:s", time()),'] Gagal Verif [Too Many Attempts.] Cek Manual di cdy.txt';
                 echo "\r\n";
                 
                 $data =  "".$link." \r\n";
@@ -243,7 +240,7 @@ while($i <= $jumlah) {
                 fwrite($fh, $data);
                 fclose($fh);
             } else {
-                echo '['.$i.'/'.$jumlah.'] Gagal Verif Cek Manual di cdy.txt';
+                echo '['.date("Y-m-d H:i:s", time()),'] Gagal Verif Cek Manual di cdy.txt';
                 echo "\r\n";
                 
                 $data =  "".$link." \r\n";
@@ -254,14 +251,12 @@ while($i <= $jumlah) {
             }
         }
     } elseif (stripos($register_bt, 'referral_id')) {
-        echo '['.$i.'/'.$jumlah.'] Kode Referral Salah';
+        echo '['.date("Y-m-d H:i:s", time()),'] Kode Referral Salah';
         echo "\r\n"; 
         exit;
     } else {
-        echo '['.$i.'/'.$jumlah.'] Gagal Daftar';
+        echo '['.date("Y-m-d H:i:s", time()),'] Gagal Daftar';
         echo "\r\n";
         continue;
     }
-
-    $i++;
 }
