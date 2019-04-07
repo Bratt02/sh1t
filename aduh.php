@@ -40,7 +40,7 @@ function check($d, $e, $link) {
     $headers = array();
     $headers[] = 'Authority: generator.email';
     $headers[] = 'Upgrade-Insecure-Requests: 1';
-    $headers[] = GenerateRandomUserAgent();
+    $headers[] = 'User-Agent: '.GenerateRandomUserAgent().'';
     $headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3';
     $headers[] = 'Accept-Language: en-US,en;q=0.9';
     $headers[] = 'Cookie: _ga=GA1.2.1164348503.1554262465; _gid=GA1.2.905585996.1554262465; embx=%5B%22$'.$e.'%40$'.$d.'%22%2C%22hcycl%40nongzaa.tk%22%5D; _gat=1; io=-aUNS6XIdbbHj__faWS_; surl='.$d.'%2F$$'.$e.'';
@@ -119,7 +119,7 @@ function ver($data, $x) {
     $headers[] = 'X-Requested-With: XMLHttpRequest';
     $headers[] = 'Authorization: Bearer '.$x.'';
     $headers[] = 'X-Srax-Big-Api-Version: 2';
-    $headers[] = GenerateRandomUserAgent();
+    $headers[] = 'User-Agent: '.GenerateRandomUserAgent().'';
     $headers[] = 'Content-Type: application/json';
     
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -186,6 +186,8 @@ while(1) {
     
     echo '['.date("Y-m-d H:i:s", time()),'] Email : '.$email; 		    
     echo "\r\n";
+
+    sleep(rand(5, 12));
     
     $register_bt = reg($email, $ref);
     
@@ -211,7 +213,7 @@ while(1) {
         echo "\r\n"; 
         continue;
     } elseif (stripos($register_bt, '204 No Content')) {
-        sleep(10);
+        sleep(3);
         
         $linkg = check($b, $ea, "https://generator.email/");
         //echo $linkg;
