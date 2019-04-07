@@ -258,18 +258,18 @@ while(1) {
                 echo "\r\n";
             } elseif($ver == '429') {
                 echo '['.date("Y-m-d H:i:s", time()),'] Gagal Verif [Too Many Attempts.] Cek Manual di cdy.txt';
-                echo "\r\n";
+                echo "\n";
                 
-                $data =  "".$link." \r\n";
+                $data =  "".$link."\n";
                 $fh = fopen("cdy.txt", "a");
                 
                 fwrite($fh, $data);
                 fclose($fh);
             } else {
                 echo '['.date("Y-m-d H:i:s", time()),'] Gagal Verif Cek Manual di cdy.txt';
-                echo "\r\n";
+                echo "\n";
                 
-                $data =  "".$link." \r\n";
+                $data =  "".$link."\n";
                 $fh = fopen("cdy.txt", "a");
                 
                 fwrite($fh, $data);
