@@ -11,6 +11,22 @@ error_reporting(0);
 // print_r(\Campo\UserAgent::getOSTypes());
 // print_r(\Campo\UserAgent::getOSNames());
 
+//list of proxies
+$proxies = array(
+    //'user:password@173.234.11.134:54253',// Some proxies require user, password, IP and port number
+    '36.89.89.67:30295',
+    '36.37.93.166:3128',
+    '167.99.167.146:8080',
+    '74.82.50.155:3128',
+    '94.242.59.245:10010',
+    '68.183.183.44:1111',
+    '118.216.130.216:3128',
+    '58.137.62.133:80',
+    '200.195.28.21:3128',
+    '31.184.252.69:443',
+    '207.180.253.113:3128'
+);
+
 function GenerateRandomUserAgent()
 {    
     $userAgent =  \Campo\UserAgent::random([
@@ -51,10 +67,11 @@ function check($d, $e, $link) {
     return $exec;
 }
 
-function reg($e, $r) {
+function reg($e, $r, $proxy) {
     $ch = curl_init();
     $data = '{"password":"AsuuuuKon59$","monetize":true,"email":"' . $e . '","referral_id":"' . $r . '"}';
     
+    curl_setopt($ch, CURLOPT_PROXY, $proxy);    // Set CURLOPT_PROXY with proxy in $proxy variable
     curl_setopt($ch, CURLOPT_URL, 'https://api.bigtoken.com/signup');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -79,9 +96,10 @@ function reg($e, $r) {
     curl_close ($ch);
 }
 
-function get($link) {
+function get($link, $proxy) {
     $ch = curl_init();
     
+    curl_setopt($ch, CURLOPT_PROXY, $proxy);    // Set CURLOPT_PROXY with proxy in $proxy variable
     curl_setopt($ch, CURLOPT_URL, $link);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
@@ -101,9 +119,10 @@ function get($link) {
     curl_close ($ch);
 }
 
-function ver($data, $x) {
+function ver($data, $x, $proxy) {
     $ch = curl_init();
     
+    curl_setopt($ch, CURLOPT_PROXY, $proxy);    // Set CURLOPT_PROXY with proxy in $proxy variable
     curl_setopt($ch, CURLOPT_URL, 'https://api.bigtoken.com/signup/email-verification');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -154,10 +173,10 @@ function dumpUrl($mail)
     fwrite($handle, $data);
 }
 
-echo 'Kang Recode - 2k19'; echo "\r\n\n";
+echo 'Kang Recode - 2k19'; echo "\r\n";
+echo "Edited by hambuilt\n\n";
 
 //echo 'Kode Referral ? : ';
-
 $ref = "EL6O533I3";
 //echo 'Mau Berapa ? : ';
     
@@ -166,9 +185,13 @@ echo "Bigtoken v6.0.1"; echo "\r\n";
 echo "================"; echo "\r\n";
 
 while(1) {
-  
-    $ea = xxx();
+    
+    $proxy = $proxies[array_rand($proxies)];
 
+    echo "[".date("Y-m-d H:i:s", time()),"] proxy ".$proxy."\n";
+    
+    $ea = xxx();
+    
     $a = [
         'mooecofficail.club',
         'jorosc.tk',
@@ -186,10 +209,8 @@ while(1) {
     
     echo '['.date("Y-m-d H:i:s", time()),'] Email : '.$email; 		    
     echo "\r\n";
-
-    sleep(rand(5, 12));
     
-    $register_bt = reg($email, $ref);
+    $register_bt = reg($email, $ref, $proxy);
     
     // print_r($register_bt);
     
@@ -243,11 +264,11 @@ while(1) {
             echo '['.date("Y-m-d H:i:s", time()),'] Berhasil Dapat Link';
             echo "\r\n";
             
-            $getver = get($link);
+            $getver = get($link, $proxy);
             $em = getStr($getver,'email=','Content-Security');
             $cod = getStr($getver,'verify?code=','&typ');
             $d = '{"email":"'.trim($em).'","verification_code":"'.$cod.'"}';
-            $ver = ver($d,$cod);
+            $ver = ver($d, $cod, $proxy);
 
             if ($ver == '200') {
                 echo '['.date("Y-m-d H:i:s", time()),'] Sukses Verif '.$em.'';
