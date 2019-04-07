@@ -264,6 +264,18 @@ while(1) {
     } else {
         echo '['.date("Y-m-d H:i:s", time()),'] Gagal Daftar {msg : '.$msg.'}';
         echo "\r\n";
+        
+        $ss = getStr($register_bt, 'Retry-After: ', 'X-RateLimit-Reset:');
+        
+        if(!$ss) 
+            $ss = 45;
+
+        $shn = $ss + 2;
+        
+        echo '['.date("Y-m-d H:i:s", time()),'] Tunggu '.$shn.' detik sebelum registrasi lagi'; echo "\r\n";
+        echo '['.date("Y-m-d H:i:s", time()),'] Tunggu Sebentar ...'; echo "\r\n";
+        
+        sleep($shn);
         continue;
     }
 }
