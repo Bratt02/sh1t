@@ -170,6 +170,8 @@ while(1) {
     
     $register_bt = reg($email, $ref);
     
+    print_r($register_bt);
+    
     if (stripos($register_bt, 'Too Many Attempts.')) {
         echo '['.date("Y-m-d H:i:s", time()),'] Gagal Daftar [Too Many Attempts.]';			    
         echo "\r\n";
