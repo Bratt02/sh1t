@@ -27,10 +27,9 @@ function check($d, $e, $link) {
     $headers[] = 'Cookie: _ga=GA1.2.1164348503.1554262465; _gid=GA1.2.905585996.1554262465; embx=%5B%22$'.$e.'%40$'.$d.'%22%2C%22hcycl%40nongzaa.tk%22%5D; _gat=1; io=-aUNS6XIdbbHj__faWS_; surl='.$d.'%2F$$'.$e.'';
     
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    
-    return curl_exec($ch);
-    
+    $exec = curl_exec($ch);
     curl_close ($ch);
+    return $exec;
 }
 
 function reg($e, $r) {
@@ -128,6 +127,14 @@ function getStr($content, $start, $end) {
     return '';
 }
 
+function dumpUrl($mail)
+{
+    $my_file = 'result_url.txt';
+    $handle = fopen($my_file, 'a') or die('Cannot open file:  '.$my_file);
+    $data = "https://generator.email/".$mail."\n";
+    fwrite($handle, $data);
+}
+
 echo 'Kang Recode - 2k19'; echo "\r\n";
 echo "================"; echo "\r\n";
 //echo 'Kode Referral ? : ';
@@ -155,10 +162,7 @@ while($i <= $jumlah) {
         'morteinateb.xyz',
         'mytempdomain.tk',
         'guitarsxltd.com',
-        'top5news.fun',
-        'jaqueline1121.club',
-        'rifkian.ga',
-        'asgasghashashas.gq'
+        'top5news.fun'       
     ];
     
     $b = $a[mt_rand(0, count($a) - 1)];
@@ -184,22 +188,32 @@ while($i <= $jumlah) {
         echo "\r\n"; 
         continue;
     } elseif (stripos($register_bt, '204 No Content')) {
-        sleep(8);
+        sleep(10);
         
         $linkg = check($b, $ea, "https://generator.email/");
         //echo $linkg;
 
-        $links = getStr($linkg, 'Location: https://generator.email/inbox', 'Content');
+        $links = getStr($linkg, 'Location: https://generator.email/inbox', '/');
         
         if(!$links) {
-            echo '['.$i.'/'.$jumlah.'] Gagal Dapat Link'; echo "\r\n"; 
+            echo '['.$i.'/'.$jumlah.'] Gagal Dapat Link'; echo "\r\n";
+            echo "[".$i."/".$jumlah."] Tunggu beberapa menit : https://generator.email/".$email; echo "\r\n";
+            
+            dumpUrl($email);
+            
             continue;
         }					
         
-        $getem = check($b,$ea,'https://generator.email/inbox'.$links.'');
+        $getem = check($b,$ea,'https://generator.email/inbox'.$links.'/');
         $link = getStr($getem,'none" href="','"');
+        
         if (!$link) {
-            echo '['.$i.'/'.$jumlah.'] E-Mail Tidak Ada Isi'; echo "\r\n"; continue;
+            echo '['.$i.'/'.$jumlah.'] E-Mail Tidak Ada Isi'; echo "\r\n";
+            echo "[".$i."/".$jumlah."] Check Sendiri : https://generator.email/".$email; echo "\r\n";
+            
+            dumpUrl($email);
+
+            continue;
         } else {
             echo '['.$i.'/'.$jumlah.'] Berhasil Dapat Link';
             echo "\r\n";
@@ -207,8 +221,9 @@ while($i <= $jumlah) {
             $getver = get($link);
             $em = getStr($getver,'email=','Content-Security');
             $cod = getStr($getver,'verify?code=','&typ');
-            $d = '{"email":"'.$em.'","verification_code":"'.$cod.'"}';
+            $d = '{"email":"'.trim($em).'","verification_code":"'.$cod.'"}';
             $ver = ver($d,$cod);
+
             if ($ver == '200') {
                 echo '['.$i.'/'.$jumlah.'] Sukses Verif '.$em.'';
                 echo "\r\n";
