@@ -176,11 +176,13 @@ while(1) {
 
     if (stripos($register_bt, 'Too Many Attempts.')) {
         
-        echo '['.date("Y-m-d H:i:s", time()),'] Gagal Daftar ['.$msg.']';			    
-        echo "\r\n";
+        echo '['.date("Y-m-d H:i:s", time()),'] Gagal Daftar ['.$msg.']'; echo "\r\n";
         
         $ss = getStr($register_bt, 'Retry-After: ', 'X-RateLimit-Reset:');
         $shn = $ss+2;
+        
+        echo '['.date("Y-m-d H:i:s", time()),'] Tunggu '.$shn.' detik sebelum registrasi lagi'; echo "\r\n";
+        echo '['.date("Y-m-d H:i:s", time()),'] Tunggu Sebentar ...'; echo "\r\n";
         
         sleep($shn);
         
