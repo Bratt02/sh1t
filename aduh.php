@@ -170,7 +170,7 @@ while(1) {
     
     $register_bt = reg($email, $ref);
     
-    // print_r($register_bt);
+    print_r($register_bt);
     
     $msg = getStr($register_bt, "\"message\": \"", "\"");
 
