@@ -1,7 +1,26 @@
 <?php
+require_once "./vendor/autoload.php";
+
 error_reporting(0);
 /* bot regis bigtoken v.6 - @riyancoday */
 /* Tempmail : mailgenerator */
+
+// print_r(\Campo\UserAgent::getDeviceTypes());
+// print_r(\Campo\UserAgent::getAgentTypes());
+// print_r(\Campo\UserAgent::getAgentNames());
+// print_r(\Campo\UserAgent::getOSTypes());
+// print_r(\Campo\UserAgent::getOSNames());
+
+function GenerateRandomUserAgent()
+{    
+    $userAgent =  \Campo\UserAgent::random([
+        'device_type' => ['Mobile', 'Tablet'],
+        'agent_type' => ['Browser'],
+        'os_type' => ['Android', 'iOS'],
+    ]);
+
+    return $userAgent;
+}
 
 function check($d, $e, $link) {
     $ch = curl_init();
@@ -21,7 +40,7 @@ function check($d, $e, $link) {
     $headers = array();
     $headers[] = 'Authority: generator.email';
     $headers[] = 'Upgrade-Insecure-Requests: 1';
-    $headers[] = 'User-Agent: Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1';
+    $headers[] = GenerateRandomUserAgent();
     $headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3';
     $headers[] = 'Accept-Language: en-US,en;q=0.9';
     $headers[] = 'Cookie: _ga=GA1.2.1164348503.1554262465; _gid=GA1.2.905585996.1554262465; embx=%5B%22$'.$e.'%40$'.$d.'%22%2C%22hcycl%40nongzaa.tk%22%5D; _gat=1; io=-aUNS6XIdbbHj__faWS_; surl='.$d.'%2F$$'.$e.'';
@@ -100,7 +119,7 @@ function ver($data, $x) {
     $headers[] = 'X-Requested-With: XMLHttpRequest';
     $headers[] = 'Authorization: Bearer '.$x.'';
     $headers[] = 'X-Srax-Big-Api-Version: 2';
-    $headers[] = 'User-Agent: Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1';
+    $headers[] = GenerateRandomUserAgent();
     $headers[] = 'Content-Type: application/json';
     
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
