@@ -234,7 +234,7 @@ while(1) {
         echo "\r\n"; 
         continue;
     } elseif (stripos($register_bt, '204 No Content')) {
-        sleep(3);
+        sleep(10);
         
         $linkg = check($b, $ea, "https://generator.email/");
         //echo $linkg;
